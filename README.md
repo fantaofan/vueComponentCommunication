@@ -1,24 +1,7 @@
-# cubevue
+# cubepro
 
-## Project setup
-```
-npm install
-```
+# 添加 cubeui 组件库 vue-cli3 vue add
 
-### Compiles and hot-reloads for development
 ```
-npm run serve
+    vue add cube-ui
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
