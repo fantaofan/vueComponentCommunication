@@ -1,7 +1,27 @@
 <template>
   <div class="home">
+    <div>
+      表单
+      <!-- key vuedom 就地复用 -->
+      <!-- 组件化要细分：提高性能；尽量减少dom操作 -->
+      <button @click="showform = !showform">切换input</button>
+      <input v-if="showform"
+             type="text"
+             placeholder="用户名"
+             key="1">
+      <input v-else
+             type="password"
+             placeholder="密码"
+             key="2">
+    </div>
+
     <!-- 头部组件 -->
     <HomeHeader />
+
+    <!-- currentC 组件名或者组件对象 -->
+    <component v-bind:is="currentC"></component>
+    <button @click="changeCo">改变当前组件</button>
+
     <!-- 轮播图 -->
     <cube-slide :data="sliders" />
     <!-- 父子组件 -->
@@ -43,6 +63,8 @@ const { mapActions, mapState } = createNamespacedHelpers("home");
 import HomeHeader from "../components/HomeHeader";
 import Son from "./Son";
 import Son1 from "./Son1";
+import Son2 from "./Son2";
+import GrandSon1 from "./GrandSon1";
 
 export default {
   name: "home",
@@ -52,7 +74,9 @@ export default {
   components: {
     HomeHeader,
     Son,
-    Son1
+    Son1,
+    Son2,
+    GrandSon1
   },
   created() {
     // 异步请求 不需要被监控的数据 初始化数据
@@ -76,6 +100,9 @@ export default {
   // },
   data() {
     return {
+      currentC: "Son2",
+      showform: true,
+
       lala: 100,
       size: 50, // 一次拉取多少条数据
       offset: 100, // 距离底部多远
@@ -84,6 +111,11 @@ export default {
     };
   },
   methods: {
+    changeCo() {
+      // 改变动态组件的值
+      this.currentC = "GrandSon1";
+      Object.freeze({ a: 1 }); // 冻结数据 不会再被getter和setter劫持
+    },
     changeV(val) {
       this.value = val;
     },

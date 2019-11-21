@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  name: "GrandSon",
   methods: {
     fn1() {
       this.$parent.$emit("input", 700);
