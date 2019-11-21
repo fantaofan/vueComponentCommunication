@@ -4,16 +4,6 @@
     <HomeHeader />
     <!-- 轮播图 -->
     <cube-slide :data="sliders" />
-    <!-- 父子组件 -->
-    <!-- <Son v-model="lala" /> -->
-    <!-- 同步改变值 -->
-    <Son :lala.sync='lala' />
-
-    <Son1 :a="[1,2,3,4]"
-          @c='fn'
-          @input="changeV"
-          :value='value' />
-
     <!-- 列表 -->
     <div class="view-wrapper">
       <cube-recycle-list class="list"
@@ -41,18 +31,11 @@ import * as Types from "../store/mutations-types";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState } = createNamespacedHelpers("home");
 import HomeHeader from "../components/HomeHeader";
-import Son from "./Son";
-import Son1 from "./Son1";
 
 export default {
   name: "home",
-  provide() {
-    return { msg: "provide" };
-  },
   components: {
-    HomeHeader,
-    Son,
-    Son1
+    HomeHeader
   },
   created() {
     // 异步请求 不需要被监控的数据 初始化数据
@@ -76,21 +59,12 @@ export default {
   // },
   data() {
     return {
-      lala: 100,
       size: 50, // 一次拉取多少条数据
       offset: 100, // 距离底部多远
-      items: [],
-      value: 300000
+      items: []
     };
   },
   methods: {
-    changeV(val) {
-      this.value = val;
-    },
-    fn() {
-      alert("我是fn");
-    },
-
     ...mapActions([Types.SET_SLIDER]),
 
     // 到底部的时候触发的事件
@@ -117,12 +91,6 @@ export default {
     }
   },
   mounted() {
-    // dom更新完成
-    this.$nextTick(() => {
-      this.$bus.$on("bus", data => {
-        console.log(data);
-      });
-    });
     // 给列表绑定滚动事件
     this.$refs.list.$el.addEventListener("scroll", () => {
       // 做防抖：直到最后一次执行

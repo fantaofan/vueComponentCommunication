@@ -1,32 +1,70 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="container">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive" />
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive" />
     </div>
-    <router-view />
+    <div class="footer">
+      <cube-tab-bar v-model="selectedLabelDefault"
+                    :data="tabs"
+                    @change="tabChange">
+      </cube-tab-bar>
+    </div>
   </div>
 </template>
-
-<style lang="less">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+  data() {
+    return {
+      selectedLabelDefault: "/", // 默认选中的导航
+      tabs: [
+        {
+          label: "Home",
+          value: "/",
+          icon: "cubeic-home" // icon样式
+        },
+        {
+          label: "About",
+          value: "/about",
+          icon: "cubeic-like"
+          // icon: "iconfont icon-zhuye"
+        }
+      ]
+    };
+  },
+  watch: {
+    $route: {
+      // 如果有立即执行，需要写成对象形式
+      handler(to, from) {
+        this.selectedLabelDefault = to.path;
+      },
+      immediate: true // 立即执行
+    }
+  },
+  methods: {
+    // 切换路由
+    tabChange(label) {
+      this.$router.push(label);
     }
   }
+};
+</script>
+<style lang="less">
+#app,
+html,
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  flex: 1;
+}
+.footer {
+  height: 58px;
+  border-top: 1px solid #e3e3e3;
 }
 </style>

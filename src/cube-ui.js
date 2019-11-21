@@ -1,3 +1,4 @@
+// 引入组件 cube-ui.js
 import Vue from "vue";
 
 // By default we import all the components.
@@ -46,7 +47,8 @@ import {
   Swipe,
   Sticky,
   ScrollNav,
-  ScrollNavBar
+  ScrollNavBar,
+  RecycleList
 } from "cube-ui";
 
 Vue.use(Button);
@@ -86,3 +88,4 @@ Vue.use(Swipe);
 Vue.use(Sticky);
 Vue.use(ScrollNav);
 Vue.use(ScrollNavBar);
+Vue.use(RecycleList);
