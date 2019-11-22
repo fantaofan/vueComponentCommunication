@@ -82,6 +82,8 @@ export default {
     // 异步请求 不需要被监控的数据 初始化数据
     // this.$store.dispatch(`home/${Types.SET_SLIDER}`);
     this[Types.SET_SLIDER]();
+
+    this.$message({ type: "success", text: "成功" });
   },
   computed: {
     ...mapState(["sliders"])

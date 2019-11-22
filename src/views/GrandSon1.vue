@@ -5,6 +5,11 @@
 </template>
 <script>
 export default {
-  name: "GrandSon1"
+  name: "GrandSon1",
+  data() {
+    return {
+      name: "123"
+    };
+  }
 };
 </script>

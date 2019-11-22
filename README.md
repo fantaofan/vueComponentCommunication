@@ -24,25 +24,25 @@
 
 # 一.Props 传递数据
 
-```
+```html
 <template>
- <div>
-  父组件:{{mny}}
-  <Son1 :mny="mny"></Son1>
- </div>
+  <div>
+    父组件:{{mny}}
+    <Son1 :mny="mny"></Son1>
+  </div>
 </template>
 <script>
-import Son1 from "./Son1";
-export default {
- components: {
-  Son1
- },
- data() {
-  return {
-    mny: 100
+  import Son1 from "./Son1";
+  export default {
+    components: {
+      Son1
+    },
+    data() {
+      return {
+        mny: 100
+      };
+    }
   };
- }
-};
 </script>
 ```
 
@@ -54,24 +54,24 @@ export default {
 
 父组件:{{mny}}
 
-```
+```html
 <script>
-import Son1 from "./Son1";
-export default {
+  import Son1 from "./Son1";
+  export default {
     methods: {
-        change(mny) {
-            this.mny = mny;
-        }
+      change(mny) {
+        this.mny = mny;
+      }
     },
     components: {
-        Son1
+      Son1
     },
     data() {
-        return {
-            mny: 100
-        };
+      return {
+        mny: 100
+      };
     }
-};
+  };
 </script>
 ```
 
@@ -79,15 +79,15 @@ export default {
 
 子组件 1: {{mny}} 更改
 
-```
+```html
 <script>
-export default {
+  export default {
     props: {
-        mny: {
-            type: Number
-        }
+      mny: {
+        type: Number
+      }
     }
-};
+  };
 </script>
 ```
 
@@ -95,7 +95,7 @@ export default {
 
 # .sync
 
-```
+```html
 <Son1 :mny.sync="mny"></Son1>
 
 <!-- 触发的事件名 update:(绑定.sync属性的名字) -->
@@ -105,48 +105,49 @@ export default {
 <Son1 v-model="mny"></Son1>
 
 <template>
- <div>
-  子组件1: {{value}} // 触发的事件只能是input
-  <button @click="$emit('input',200)">更改</button>
- </div>
+  <div>
+    子组件1: {{value}} // 触发的事件只能是input
+    <button @click="$emit('input',200)">更改</button>
+  </div>
 </template>
 <script>
-export default {
- props: {
-  value: { // 接收到的属性名只能叫value
-   type: Number
-  }
- }
-};
+  export default {
+    props: {
+      value: {
+        // 接收到的属性名只能叫value
+        type: Number
+      }
+    }
+  };
 </script>
 ```
 
 # 三.$parent、$children 继续将属性传递
 
-```
+```html
 <Grandson1 :value="value"></Grandson1>
 
 <template>
- <div>
-  孙子:{{value}}
-  <!-- 调用父组件的input事件 -->
-  <button @click="$parent.$emit('input',200)">更改</button>
- </div>
+  <div>
+    孙子:{{value}}
+    <!-- 调用父组件的input事件 -->
+    <button @click="$parent.$emit('input',200)">更改</button>
+  </div>
 </template>
 <script>
-export default {
- props: {
-  value: {
-   type: Number
-  }
- }
-};
+  export default {
+    props: {
+      value: {
+        type: Number
+      }
+    }
+  };
 </script>
 ```
 
 如果层级很深那么就会出现$parent.$parent.....我们可以封装一个\$dispatch 方法向上进行派发
 
-```
+```js
 # \$dispatch
 
 Vue.prototype.$dispatch = function $dispatch(eventName, data) {
@@ -177,7 +178,7 @@ Vue.prototype.$broadcast = function $broadcast(eventName, data) {
 
 # \$attrs 批量向下传入属性
 
-```
+```html
 <Son2 name="组件1" age="10"></Son2>
 
 <!-- 可以在son2组件中使用$attrs属性,可以将属性继续向下传递 -->
@@ -187,10 +188,9 @@ Vue.prototype.$broadcast = function $broadcast(eventName, data) {
 </div>
 
 <template>
- <div>孙子:{{$attrs}}</div>
+  <div>孙子:{{$attrs}}</div>
 </template>
-#$listeners
-批量向下传入方法
+#$listeners 批量向下传入方法
 
 <Son2 name="组件 1" age="10" @click="()=>{this.mny = 500}"></Son2>
 
@@ -213,7 +213,7 @@ inject: ["parentMsg"] // 会将数据挂载在当前实例上
 
 获取组件实例
 
-```
+```js
 <Grandson2 v-bind="$attrs" v-on="$listeners" ref="grand2"></Grandson2>
 mounted() {
     // 获取组件定义的属性
@@ -225,7 +225,7 @@ mounted() {
 
 用于跨组件通知(不复杂的项目可以使用这种方式)
 
-```
+```js
 Vue.prototype.\$bus = new Vue();
 
 mounted() {

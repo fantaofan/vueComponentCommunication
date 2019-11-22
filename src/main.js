@@ -5,6 +5,10 @@ import router from "./router";
 import store from "./store";
 import "amfe-flexible";
 import filters from "./util/filters";
+import mess from "./views/plugin/message.js";
+
+// Vue.use() 使用哪个插件 自动调用插件上面install方法
+Vue.use(mess, { time: 3000 });
 
 // 创建一个vue实例
 Vue.prototype.$bus = new Vue();
